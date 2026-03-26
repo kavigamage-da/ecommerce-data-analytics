@@ -112,3 +112,11 @@ pytest src/tests/ -v
 ---
 
 *Synthetic dataset. All customer data is artificially generated — no real PII.*
+## Dashboard Screenshots
+
+![Executive Overview](docs/screenshots/1_Executive_Overview.png)
+
+![RFM Segmentation](docs/screenshots/2_RFM_Segmentation.png)
+
+![Churn Prediction](docs/screenshots/4_Churn_Prediction.png)
+
