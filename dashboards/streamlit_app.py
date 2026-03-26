@@ -345,7 +345,7 @@ def render_sidebar(full_df, rfm_df):
     max_date = datetime(2023, 12, 31)
     date_range = st.sidebar.date_input(
         "Purchase Date Range",
-        value=(datetime(2022, 1, 1), max_date),
+        value=(datetime(2019, 1, 1), max_date),
         min_value=min_date, max_value=max_date,
     )
 
