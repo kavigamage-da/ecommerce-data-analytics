@@ -305,7 +305,7 @@ def compute_cohort_retention(customers_df: pd.DataFrame, purchases_df: pd.DataFr
     active = merged.groupby(["cohort_month", "period"])["customer_id"].nunique().reset_index()
     active.rename(columns={"customer_id": "active"}, inplace=True)
 
-    cohort_sizes = active[active["period"] == 0].set_index("cohort_month")["active"]
+    cohort_sizes = cust.groupby("cohort_month")["customer_id"].nunique()
     pivot = active.pivot_table(index="cohort_month", columns="period", values="active")
     retention = pivot.divide(cohort_sizes, axis=0).round(3)
     retention = retention.loc[:, retention.columns <= 12]
