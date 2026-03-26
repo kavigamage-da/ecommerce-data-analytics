@@ -1,0 +1,29 @@
+{
+  "best_model_standard": {
+    "model": "XGBoost",
+    "roc_auc": 0.8577,
+    "f1": 0.8148,
+    "accuracy": 0.8145
+  },
+  "best_model_oot": {
+    "model": "Random Forest",
+    "roc_auc": 0.5062,
+    "f1": 0.7704,
+    "accuracy": 0.6317
+  },
+  "oot_methodology": "Out-of-Time validation: model trained on 2019-2020 signup cohorts, evaluated on 2021 signup cohort (temporally unseen). Prevents temporal data leakage present in random splits. AUC degradation from standard to OOT measures true generalisation.",
+  "top_features": {
+    "tenure_years": 0.48042890429496765,
+    "months_since_signup": 0.29410070180892944,
+    "spend_per_month": 0.028542641550302505,
+    "total_spent": 0.01826392114162445,
+    "high_spender": 0.01464998908340931
+  },
+  "xgb_params": {
+    "n_estimators": 300,
+    "max_depth": 5,
+    "learning_rate": 0.05,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8
+  }
+}

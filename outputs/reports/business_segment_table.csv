@@ -1,0 +1,10 @@
+value_segment,risk_segment,customers,avg_clv,avg_churn_prob,recommended_action
+Low,Low Risk,1604,88.59792038707744,0.14099895271275187,Minimal intervention
+Low,Medium Risk,822,88.27412840939941,0.5094133145381798,Minimal intervention
+Low,High Risk,907,88.70213607154514,0.8132617141737328,Low-cost retention (email campaigns)
+Medium,Low Risk,1623,125.63513619556632,0.14350189177363135,Minimal intervention
+Medium,Medium Risk,791,125.23780076014677,0.5062522858124587,Minimal intervention
+Medium,High Risk,919,125.39716643223262,0.8163175786140975,Low-cost retention (email campaigns)
+High,Low Risk,1637,205.4737163626719,0.1427607600551112,Minimal intervention
+High,Medium Risk,800,206.81704643918872,0.5098960282522875,Maintain engagement (loyalty rewards)
+High,High Risk,897,209.18069516756034,0.8108941814451851,Immediate retention (discount + personalized outreach)

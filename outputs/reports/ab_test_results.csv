@@ -1,0 +1,2 @@
+test,control_n,treatment_n,control_mean,treatment_mean,absolute_lift,relative_lift_pct,ci_lower,ci_upper,t_statistic,p_value,significant,cohens_d,effect_magnitude,projected_annual_lift,lift_lower_bound,lift_upper_bound,recommendation
+Welch's t-test,5202,4798,0.0,12.6147,12.6147,,12.3696,12.8598,-100.8881,0.0,True,2.1027,large,126147.0,123696.0,128598.0,"SHIP. Campaign produces an estimated $126,147/year (95% CI: $123,696 – $128,598). Relative lift: N/A."

@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+env/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Models (large binaries — use Git LFS or exclude)
+models/*.pkl
+models/*.joblib
+
+# Outputs (generated — not source)
+outputs/pipeline.log
+outputs/__pycache__/
+
+# OS noise
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Noise files from your current project root — DELETE THESE
+cd
+tree
+structure.txt
+current_structure.txt
+full_project_structure.txt
+
+# IDE
+.vscode/
+.idea/
+*.swp

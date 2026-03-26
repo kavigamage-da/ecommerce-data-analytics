@@ -1,0 +1,2 @@
+test,control_n,treatment_n,control_mean,treatment_mean,absolute_lift,relative_lift_pct,ci_lower,ci_upper,t_statistic,p_value,significant,cohens_d,effect_magnitude,projected_annual_lift,lift_lower_bound,lift_upper_bound,recommendation
+Revenue A/B Test,0,10000,,6.052533,,,,,,,False,,N/A,,,,"Consider scaling — estimated annual lift: $nan (95% CI: $nan – $nan), Relative lift: N/A."

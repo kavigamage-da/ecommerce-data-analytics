@@ -1,0 +1,7 @@
+segment,n_customers,total_revenue,avg_monetary,avg_rfm_score,avg_recency,avg_frequency,pct_customers,pct_revenue,estimated_clv_at_risk,description,recommended_action
+Champions,1254,1152355.52,918.9437958532695,4.565789473684211,23.23285486443381,13.768740031897927,12.5,20.2,610660.0,"Bought recently, buy often, and spend the most.",Reward them. Ask for reviews. Offer exclusive early access.
+Loyal Customers,2837,2025293.4,713.885583362707,3.66691928093056,75.72188931970392,11.990130419457174,28.4,35.6,1381534.0,Regular buyers with strong monetary value.,Upsell higher-value products. Enrol in loyalty programme.
+Others,1809,1117200.21,617.5788888888889,2.8124930901050305,270.698175787728,9.79933665008292,18.1,19.6,880929.0,Does not fit cleanly into other segments.,Analyse further. Generic nurture sequence.
+At Risk,729,368071.98,504.89983539094646,2.59519890260631,123.59807956104252,9.493827160493828,7.3,6.5,355001.0,Used to buy regularly but haven't come back in a while.,Send win-back emails. Offer limited-time discounts.
+Potential Loyalists,2073,687308.44,331.55255185721177,2.5242643511818623,37.444283646888564,7.7520501688374335,20.7,12.1,1009489.0,Recent customers with growing engagement.,Offer membership or loyalty programme. Send personalised recommendations.
+Lost,1298,342182.95,263.6232280431433,1.2926425269645607,374.2157164869029,6.299691833590138,13.0,6.0,632087.0,"Lowest recency, frequency, and spend.",Reactivation campaign with aggressive discount or accept churn.
