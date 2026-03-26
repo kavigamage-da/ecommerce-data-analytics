@@ -1,12 +1,26 @@
-﻿![CI](https://github.com/kavigamage-da/ecommerce-data-analytics/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/kavigamage-da/ecommerce-data-analytics/actions/workflows/ci.yml/badge.svg)
 
 🚀 **Live Dashboard:** https://kavigamage-da-ecommerce.streamlit.app
+
+![Dashboard Demo](dashboards/screenshots/dashboard_demo.gif)
 
 # E-Commerce Customer Analytics — Churn Prediction & CLV
 
 > **Business Result:** Identified **$2.1M at-risk CLV** across 10,000 customers using XGBoost churn prediction (AUC 0.858) + RFM segmentation — enabling targeted retention campaigns with out-of-time validated performance and proactively uncovered a temporal leakage risk that would have caused silent model failure in production.
 
 End-to-end data analytics portfolio project covering customer churn prediction, lifetime value modelling, RFM segmentation, cohort retention analysis, and A/B testing — built on a synthetic 10,000-customer e-commerce dataset.
+
+---
+
+## 💡 Key Metrics at a Glance
+
+| Metric | Value |
+|--------|-------|
+| Customers | 10,000 |
+| High churn risk | 42% (~4,200 customers) |
+| At-risk CLV | $2.1M |
+| Retention ROI focus | Mid-CLV segment ($300–$800) |
+| Discount campaign impact | ~$127K annual revenue protected |
 
 ---
 
@@ -21,6 +35,8 @@ End-to-end data analytics portfolio project covering customer churn prediction, 
 4. **Out-of-time (OOT) validation exposed a critical production risk.** XGBoost AUC drops from 0.858 (standard 80/20 split) to 0.487 (2021 cohort OOT test) — essentially random. This was proactively discovered and documented. All three models degrade identically, confirming the issue is **feature design (tenure leakage), not model choice**. The recommendation is to retrain on behaviour-only features before any production deployment.
 
 > The OOT degradation is the most important finding in this project. Catching this before deployment is exactly what separates production-ready analytics from prototype analytics. Most published churn models in portfolio projects skip this check entirely.
+>
+> *This finding was discovered proactively — not prompted — during validation. The model would have been deployed with 0.487 OOT AUC without this check.*
 
 ---
 
