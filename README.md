@@ -1,3 +1,5 @@
+![CI](https://github.com/kavigamage-da/ecommerce-data-analytics/actions/workflows/ci.yml/badge.svg)
+
 🚀 Live Dashboard: https://kavigamage-da-ecommerce.streamlit.app
 
 # E-Commerce Customer Analytics — Churn Prediction & CLV
