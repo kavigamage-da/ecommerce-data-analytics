@@ -652,8 +652,7 @@ def render_rfm_segmentation(rfm_df, full_df, filters):
 def render_cohort_analysis(full_df, purchases_df, filters):
     st.markdown('<div class="section-header">🔄 Cohort Retention Analysis</div>', unsafe_allow_html=True)
 
-    purchases_filtered = apply_purchase_date_filter(purchases_df, filters)
-    retention = compute_cohort_retention(full_df, purchases_filtered)
+    retention = compute_cohort_retention(full_df, purchases_df)
 
     if retention.empty:
         st.warning("⚠️ Insufficient data for cohort analysis."); return
