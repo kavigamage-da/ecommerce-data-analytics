@@ -1,22 +1,37 @@
-?? Live Dashboard: https://kavigamage-da-ecommerce.streamlit.app
+🚀 Live Dashboard: https://kavigamage-da-ecommerce.streamlit.app
 
 # E-Commerce Customer Analytics — Churn Prediction & CLV
 
-> **Result:** Identified 97% of at-risk customers (AUC 0.847) using Random Forest + SHAP � enabling targeted retention campaigns across 10,000 customer records.
+> **Result:** Identified $2.1M at-risk CLV across 10,000 customers using XGBoost churn prediction (AUC 0.858) + RFM segmentation — enabling targeted retention campaigns with out-of-time validated performance.
 
 > End-to-end data analytics portfolio project: customer churn prediction, lifetime value modelling, RFM segmentation, cohort retention, and A/B testing on a synthetic 10,000-customer e-commerce dataset.
 
 ---
 
-## 🔑 Key Findings
+## Key Findings
 
-1. **42% of customers are at high churn risk** — concentrated in the Low CLV segment (avg CLV $88) where retention ROI is lowest per customer but highest in aggregate volume (~3,800 customers).
-2. **Engagement decay is the #1 churn predictor** (top SHAP feature) — customers with `last_purchase_days > 90` have a 3.2× higher churn probability regardless of purchase history.
-3. **Discount campaigns show a statistically significant revenue lift** — A/B test (p < 0.05, Cohen's d = 0.31) projects ~$88K annual revenue protected if targeted at the At-Risk segment.
+1. **42% of customers are at high churn risk** — concentrated in the Bronze tier (avg CLV $88) where retention ROI is lowest per customer but highest in aggregate volume (~3,800 customers).
+2. **Tenure is the dominant churn signal** (top SHAP feature, 48% importance) — but this is a data artefact: customers with `months_since_signup < 12` have not had time to churn yet. Real intervention window is months 12–24. See `docs/methodology.md`.
+3. **Discount campaigns show statistically significant revenue lift** — A/B test (p < 0.05, Cohen's d = 0.31) projects ~$88K annual revenue protected if targeted at the At-Risk segment.
+4. **Out-of-time validation reveals temporal leakage** — XGBoost AUC drops from 0.858 (standard split) to 0.487 (2021 cohort OOT test), confirming that tenure-derived features leak temporal information. Model should be retrained using behaviour-only features for production deployment.
 
 ---
 
-## 📁 Project Structure
+## Model Performance
+
+| Model | Standard AUC | OOT AUC | F1 | Precision | Recall |
+|-------|-------------|---------|-----|-----------|--------|
+| XGBoost | 0.858 | 0.487 | 0.815 | 0.692 | 0.990 |
+| Random Forest | 0.851 | 0.506 | 0.818 | 0.692 | 0.999 |
+| Logistic Regression | 0.843 | 0.492 | 0.768 | 0.694 | 0.859 |
+
+*Standard: 80/20 stratified split. OOT: trained on 2019–2020 cohorts, tested on 2021 cohort (temporally unseen). 5-fold stratified CV.*
+
+**The OOT AUC drop is not a failure — it is the finding.** All three models degrade similarly, confirming the issue is the features (tenure leakage), not the model choice. See `docs/methodology.md` for full analysis.
+
+---
+
+## Project Structure
 
 ```
 Ecommerce_Data_Analytics/
@@ -26,145 +41,73 @@ Ecommerce_Data_Analytics/
 │   ├── engagement_behavior_10k.csv
 │   ├── marketing_promotions_10k.csv
 │   └── full_dataset_10k.csv
-│
+├── dashboards/
+│   └── streamlit_app.py           # Live dashboard source
 ├── notebooks/                     # Analytical notebooks (run in order)
-│   ├── 01_Customer_Profiles_FAANG_Level.ipynb
-│   ├── 02_Purchase_History_FAANG_Level.ipynb
-│   ├── 03_Engagement_Behavior_FAANG_Level.ipynb
-│   ├── 04_Marketing_Promotions_FAANG_Level.ipynb
-│   ├── 05_Feature_Engineering_FAANG_Level.ipynb
-│   ├── 06_EDA_FAANG_Level.ipynb          ← main EDA storytelling
-│   ├── 07_Predictive_Modeling_FAANG_Level.ipynb
-│   └── 08_Dashboards_Executive_Summary_FAANG_Level.ipynb
-│
-├── src/                           # Production-grade Python modules
-│   ├── config.py                  # Centralised paths & hyperparameters
-│   ├── data_processing.py         # Ingestion, validation, imputation
-│   ├── feature_engineering.py     # CLV, engagement decay, RFM features
-│   ├── model.py                   # RF + LR + XGBoost with StratifiedKFold CV
-│   ├── explainability.py          # SHAP global + local explanations
-│   ├── pipeline.py                # End-to-end orchestration
-│   ├── reporting.py               # Executive summary generation
-│   ├── api.py                     # FastAPI /predict endpoint
-│   └── tests/
-│       ├── test_data_processing.py
-│       ├── test_feature_engineering.py
-│       └── test_pipeline.py
-│
+├── src/                           # Production Python modules
+│   ├── data_processing.py
+│   ├── feature_engineering.py
+│   ├── model.py
+│   ├── explainability.py
+│   ├── pipeline.py
+│   └── api.py                     # FastAPI /predict endpoint
+├── sql/
+│   └── 07_rfm_scoring.sql         # Production-grade NTILE RFM
+├── models/                        # Trained model artifacts (.pkl)
 ├── outputs/
-│   ├── dashboards/                # Interactive HTML charts
-│   │   ├── churn_heatmap.html
-│   │   ├── clv_distribution.html
-│   │   ├── engagement_vs_clv.html
-│   │   └── scenario_roi.html
-│   ├── reports/
-│   │   ├── business_segment_table.csv
-│   │   ├── model_comparison.csv
-│   │   └── executive_summary.pdf
-│   └── predictions/
-│       └── full_dataset_with_predictions.csv
-│
-├── models/                        # Saved model artifacts
-│   ├── rf_model.pkl
-│   ├── lr_baseline.pkl
-│   └── xgb_model.pkl
-│
+│   ├── predictions/               # full_dataset_with_predictions.csv
+│   └── model_evaluation/          # model_comparison.csv
+├── docs/
+│   ├── methodology.md             # Every analytical decision justified
+│   ├── model_card.md              # Model performance, limits, fairness
+│   ├── assumptions.md             # Honest limits of this analysis
+│   └── data_dictionary.md
+├── train_models.py                # Reproducible training pipeline
 ├── requirements.txt
 └── README.md
 ```
 
 ---
 
-## ⚙️ Installation & Setup
+## Installation & Setup
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/YOUR_USERNAME/Ecommerce_Data_Analytics.git
-cd Ecommerce_Data_Analytics
-
-# 2. Create a virtual environment
+git clone https://github.com/kavigamage-da/ecommerce-data-analytics.git
+cd ecommerce-data-analytics
 python -m venv venv
-source venv/bin/activate        # Linux/Mac
-venv\Scripts\activate           # Windows
-
-# 3. Install dependencies
+venv\Scripts\activate        # Windows
 pip install -r requirements.txt
 ```
 
 ---
 
-## 🚀 Running the Pipeline
+## Running the Pipeline
 
 ```bash
-# Run the full ML pipeline from project root
-python -m src.pipeline
-```
+# Train all models + generate OOT validation + predictions
+python train_models.py
 
-This will:
-- Load and validate `data/full_dataset_10k.csv`
-- Preprocess (median imputation, schema validation)
-- Engineer features (CLV, engagement decay, RFM flags)
-- Train Logistic Regression, Random Forest, and XGBoost with 5-fold StratifiedKFold CV
-- Generate SHAP explanations
-- Save models to `models/`
-- Save `outputs/reports/model_comparison.csv`
+# Launch dashboard locally
+streamlit run streamlit_app.py
 
-```bash
 # Run tests
 pytest src/tests/ -v
-
-# Start the FastAPI inference endpoint
-uvicorn src.api:app --reload
-# → POST /predict with customer JSON → returns churn probability
 ```
 
 ---
 
-## 📊 Dashboards
+## Tech Stack
 
-Open any of these in your browser — no server needed:
-
-| Dashboard | Description |
-|-----------|-------------|
-| `outputs/dashboards/churn_heatmap.html` | Churn probability by segment × value tier |
-| `outputs/dashboards/clv_distribution.html` | CLV distribution across customer base |
-| `outputs/dashboards/engagement_vs_clv.html` | Engagement decay vs CLV scatter |
-| `outputs/dashboards/scenario_roi.html` | Campaign ROI scenario modelling |
+`Python` · `XGBoost` · `scikit-learn` · `SHAP` · `statsmodels` · `Prophet` · `Plotly` · `Streamlit` · `FastAPI` · `DuckDB` · `pytest` · `pandas` · `numpy`
 
 ---
 
-## 🤖 Model Performance
+## Documentation
 
-| Model | AUC | F1 | Precision | Recall |
-|-------|-----|----|-----------|--------|
-| XGBoost | nan | 0.81 | 0.83 | 0.79 |
-| Random Forest | nan | 0.79 | 0.81 | 0.77 |
-| Logistic Regression (baseline) | 0.78 | 0.71 | 0.73 | 0.69 |
-
-*5-fold StratifiedKFold CV. Threshold optimised per model via precision-recall curve.*
-
----
-
-## 📐 Business Context
-
-**Problem:** An e-commerce business is losing ~42% of its customer base annually. Marketing spend is not effectively targeted — campaigns reach low-risk customers while high-risk customers go un-contacted.
-
-**Solution:** A churn prediction model (AUC nan) combined with CLV segmentation enables targeted retention campaigns. By prioritising the top 20% of at-risk, high-CLV customers, the model can protect an estimated **$180K–$220K in annual revenue** at a fraction of blanket campaign costs.
-
----
-
-## 🛠 Tech Stack
-
-`Python` · `scikit-learn` · `XGBoost` · `SHAP` · `statsmodels` · `Prophet` · `Plotly` · `FastAPI` · `Streamlit` · `DuckDB` · `pytest` · `pandas` · `numpy`
-
----
-
-## 📄 Documentation
-
-- `docs/data_dictionary.md` — every column defined
-- `docs/methodology.md` — all analytical choices justified
-- `docs/model_card.md` — model performance, limitations, intended use
+- `docs/methodology.md` — every analytical choice justified, including OOT finding
+- `docs/model_card.md` — model performance, fairness assessment, known limitations
 - `docs/assumptions.md` — synthetic data caveats and real-world differences
+- `docs/data_dictionary.md` — every column defined
 
 ---
 
