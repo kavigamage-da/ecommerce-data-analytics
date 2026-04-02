@@ -1,3 +1,8 @@
+﻿-- BUSINESS QUESTION: Who are our highest-value customers and what drives their value?
+-- DECISION: Which customers get VIP treatment and personal outreach.
+-- FINDING: Top 10 customers by CLV are concentrated in Platinum and Gold tiers.
+-- TECHNIQUE: RANK() window function, multi-metric aggregation.
+
 -- Business question: Who are our top 10 customers by lifetime value, and what makes them different?
 -- Technique: Aggregation + JOIN across tables
 
@@ -30,5 +35,6 @@ FROM enriched
 ORDER BY total_spent DESC
 LIMIT 10;
 
--- Finding: Champions cluster in specific tiers and geographies — use this to
+-- Finding: Champions cluster in specific tiers and geographies â€” use this to
 --          define the ICP (Ideal Customer Profile) for acquisition targeting.
+

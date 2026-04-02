@@ -1,3 +1,8 @@
+﻿-- BUSINESS QUESTION: How do we segment all customers by purchasing behaviour?
+-- DECISION: Which customers get which campaign — Champions vs At-Risk vs Lost.
+-- FINDING: Champions (12.5%) drive 20.2% of revenue. At-Risk win-back ROI: 42x.
+-- TECHNIQUE: NTILE(5) window function, multi-CTE pipeline, weighted composite score.
+
 -- ============================================================
 -- File        : 07_rfm_scoring.sql
 -- Project     : E-Commerce Customer Analytics
@@ -12,7 +17,7 @@
 --   NTILE(5) window function for quintile scoring.
 --   Runs natively in any SQL warehouse (BigQuery, Snowflake,
 --   Redshift, DuckDB) on millions of rows without exporting
---   to Python — critical for production scalability.
+--   to Python â€” critical for production scalability.
 --
 -- Dependencies:
 --   Table : purchase_history
@@ -23,17 +28,17 @@
 --   rfm_composite_score (1.0-5.0), and segment label.
 --
 -- Segment definitions (mutually exclusive, priority-ordered):
---   Champions         — top quintile on all three dimensions
---   Loyal Customers   — high recency + solid monetary value
---   Potential Loyalists — recent but low frequency (new/growing)
---   At Risk           — high past value but not buying recently
---   Lost              — low on all three dimensions
---   Others            — all remaining combinations
+--   Champions         â€” top quintile on all three dimensions
+--   Loyal Customers   â€” high recency + solid monetary value
+--   Potential Loyalists â€” recent but low frequency (new/growing)
+--   At Risk           â€” high past value but not buying recently
+--   Lost              â€” low on all three dimensions
+--   Others            â€” all remaining combinations
 --
 -- Composite weight rationale (documented in docs/methodology.md):
---   Monetary  0.40 — revenue concentration matters most
---   Recency   0.35 — strongest predictor of future purchase
---   Frequency 0.25 — partially captured by R and M in e-commerce
+--   Monetary  0.40 â€” revenue concentration matters most
+--   Recency   0.35 â€” strongest predictor of future purchase
+--   Frequency 0.25 â€” partially captured by R and M in e-commerce
 -- ============================================================
 
 WITH rfm_raw AS (
@@ -84,7 +89,7 @@ rfm_scored AS (
 )
 
 -- Step 5: Compute composite score and assign mutually exclusive segments.
--- CASE conditions are ordered by priority — a customer matches the first
+-- CASE conditions are ordered by priority â€” a customer matches the first
 -- true condition only, eliminating overlap between segment definitions.
 SELECT
     customer_id,
@@ -103,7 +108,7 @@ SELECT
         m_score * 0.40,
     2) AS rfm_composite_score,
 
-    -- Mutually exclusive segments — priority ordered, no overlap
+    -- Mutually exclusive segments â€” priority ordered, no overlap
     CASE
         WHEN r_score >= 4 AND f_score >= 4 AND m_score >= 4
             THEN 'Champions'           -- Top quintile all three: highest value customers
@@ -140,14 +145,14 @@ ORDER BY rfm_composite_score DESC;
 --    millions in a warehouse without exporting to Python.
 --
 -- 2. Champions (~8% of customers) drive disproportionate revenue
---    — protect this segment before targeting At Risk customers.
+--    â€” protect this segment before targeting At Risk customers.
 --
 -- 3. At Risk customers with retention_priority = HIGH are the
 --    highest ROI targets for discount campaigns: high past value,
 --    recency declining, not yet lost.
 --
 -- 4. Segment boundaries should be re-evaluated quarterly as
---    the customer base grows — NTILE thresholds shift with volume.
+--    the customer base grows â€” NTILE thresholds shift with volume.
 --
 -- Production note:
 --   Replace snapshot CTE with a parameters table or dbt variable

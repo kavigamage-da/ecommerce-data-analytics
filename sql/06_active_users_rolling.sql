@@ -1,3 +1,8 @@
+﻿-- BUSINESS QUESTION: How many customers were active in last 30, 60, 90 days?
+-- DECISION: Re-engagement campaign targeting — who to include in win-back.
+-- FINDING: Only 24.5% active in 30 days. 3,871 customers are 90-day inactive re-engagement targets.
+-- TECHNIQUE: DATE_DIFF, conditional COUNT DISTINCT, CROSS JOIN reference date.
+
 -- Business question: How many customers were active in the last 30, 60, and 90 days?
 -- Technique: Window functions for rolling activity counts
 
@@ -36,5 +41,6 @@ SELECT
     ROUND(SUM(active_90d) * 100.0 / COUNT(*), 2)  AS pct_active_90d
 FROM activity_flags;
 
--- Finding: The gap between 30d and 90d active rates reveals re-engagement latency —
+-- Finding: The gap between 30d and 90d active rates reveals re-engagement latency â€”
 --          if 90d >> 30d, customers need a longer nurture cycle before re-purchasing.
+

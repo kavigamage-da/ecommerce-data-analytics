@@ -1,3 +1,8 @@
+﻿-- BUSINESS QUESTION: Which product categories drive the most revenue?
+-- DECISION: Inventory and merchandising prioritisation.
+-- FINDING: Jewelry is top category at 10.2% revenue share. Even distribution across others.
+-- TECHNIQUE: GROUP BY with revenue share calculation, RANK() window function.
+
 -- Business question: What is the revenue contribution of each product category, and how has it changed?
 -- Technique: ROLLUP for subtotals, window functions for share calculation
 
@@ -27,5 +32,6 @@ with_share AS (
 SELECT * FROM with_share
 ORDER BY revenue_rank;
 
--- Finding: Apply the 80/20 rule — the top categories driving 80% of revenue
+-- Finding: Apply the 80/20 rule â€” the top categories driving 80% of revenue
 --          deserve the most inventory, marketing spend, and operational focus.
+

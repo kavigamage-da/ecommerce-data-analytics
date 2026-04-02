@@ -1,3 +1,8 @@
+﻿-- BUSINESS QUESTION: Which marketing campaigns deliver the best return?
+-- DECISION: Where to allocate next quarter marketing budget.
+-- FINDING: Summer Sale highest total revenue. Holiday Sale highest conversion rate.
+-- TECHNIQUE: JOIN, NULLIF safe division, revenue-per-conversion ranking.
+
 -- Business question: Which marketing campaigns delivered the best ROI?
 -- Technique: Aggregation with conversion rate and revenue-per-respondent calculation
 
@@ -29,3 +34,4 @@ ORDER BY total_additional_revenue DESC;
 
 -- Finding: A campaign with high conversion but low average revenue may be attracting
 --          low-value customers. Optimise for revenue per conversion, not just conversion rate.
+

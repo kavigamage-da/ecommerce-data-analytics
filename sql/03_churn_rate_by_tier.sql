@@ -1,3 +1,8 @@
+﻿-- BUSINESS QUESTION: Which customer tier has the highest churn and most CLV at risk?
+-- DECISION: Where to focus retention budget — which tier to prioritise.
+-- FINDING: Platinum tier has highest churn rate at 45.6%. Bronze has highest volume at risk.
+-- TECHNIQUE: Conditional aggregation, revenue-weighted churn risk.
+
 -- Business question: Which customer tier has the highest churn rate, and what is the revenue at risk?
 -- Technique: Conditional aggregation, revenue-weighted churn risk
 
@@ -23,4 +28,5 @@ FROM tier_stats
 ORDER BY churn_rate_pct DESC;
 
 -- Finding: High-tier customers with high churn rates represent disproportionate
---          revenue risk — these are the highest-priority retention targets.
+--          revenue risk â€” these are the highest-priority retention targets.
+

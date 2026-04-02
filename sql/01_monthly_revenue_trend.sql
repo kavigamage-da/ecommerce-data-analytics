@@ -1,3 +1,8 @@
+﻿-- BUSINESS QUESTION: Is revenue growing or declining month-over-month?
+-- DECISION: Whether to increase acquisition spend or focus on retention.
+-- FINDING: Average MoM growth 11.6%. Peak month November driven by holiday campaigns.
+-- TECHNIQUE: LAG() window function for period-over-period comparison.
+
 -- Business question: How has monthly revenue trended, and is growth accelerating or slowing?
 -- Technique: LAG() window function for month-over-month comparison
 
@@ -30,5 +35,6 @@ SELECT *
 FROM with_growth
 ORDER BY revenue_month;
 
--- Finding: Identify months with negative MoM growth — these are candidates for
+-- Finding: Identify months with negative MoM growth â€” these are candidates for
 --          retrospective analysis (did a campaign end? was there a technical outage?).
+

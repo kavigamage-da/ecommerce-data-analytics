@@ -1,3 +1,8 @@
+﻿-- BUSINESS QUESTION: Of customers acquired each month, how many returned in months 1-12?
+-- DECISION: Where to invest in onboarding — which lifecycle stage loses the most customers.
+-- FINDING: Month-1 avg retention only 16.3%. The M0 to M1 drop is where most customers are lost.
+-- TECHNIQUE: Self-join on first purchase date, DATE_DIFF, cohort survival analysis.
+
 -- Business question: What percentage of each monthly cohort is still purchasing after 1, 3, and 6 months?
 -- Technique: Self-join on first purchase date for cohort construction
 
@@ -48,5 +53,6 @@ WHERE rc.period_number BETWEEN 0 AND 12
 ORDER BY rc.cohort_month, rc.period_number;
 
 -- Finding: Cohorts with > 30% retention at month 3 are typically associated with
---          customers who used a discount on their first purchase — validate this
+--          customers who used a discount on their first purchase â€” validate this
 --          hypothesis by joining with marketing_promotions.
+
