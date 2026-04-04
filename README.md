@@ -146,18 +146,22 @@ used year-dependent distributions, not consistent statistical parameters across 
 ## Repository Structure
 ```
 ecommerce-data-analytics/
+├── .github/workflows/     # CI pipeline
 ├── data/                  # Synthetic dataset (10,000 customers)
-├── notebooks/             # Analysis notebooks (06-13)
-│   └── data_generation/   # Dataset generation scripts (01-05)
-├── src/                   # Core Python modules (66 tests passing)
-├── models/                # Trained model artefacts
-├── sql/                   # 8 DuckDB SQL queries
+├── dashboards/            # Dashboard screenshots
 ├── docs/
 │   └── methodology.md     # OOT validation, distribution shift, design decisions
+├── figures/               # Generated chart outputs
+├── models/                # Trained model artefacts
+├── notebooks/             # Analysis notebooks (06-13)
+│   └── data_generation/   # Dataset generation scripts (01-05)
+├── outputs/               # Pipeline output artefacts
+├── sql/                   # 8 DuckDB SQL queries
+├── src/                   # Core Python modules (66 tests passing)
 ├── FINDINGS.md            # One-page business summary
+├── requirements.txt
 ├── streamlit_app.py       # Live dashboard entry point
 └── train_models.py        # Training pipeline with OOT validation
-```
 
 ---
 
